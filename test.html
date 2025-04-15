@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dosen Zähler</title>
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --card-bg: #ffffff;
+      --text: #1d1d1f;
+      --secondary: #d1d5db;
+      --reset: #ef4444;
+      --btn-text: #ffffff;
+      --log-bg: #e5e7eb;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1c1c1e;
+      --card-bg: #2c2c2e;
+      --text: #f2f2f7;
+      --secondary: #4b5563;
+      --reset: #ef4444;
+      --btn-text: #ffffff;
+      --log-bg: #3a3a3c;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    .dark-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background-color: #007aff;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      text-align: center;
+      transition: background 0.3s;
+    }
+
+    .color-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+    }
+
+    .yellow { background-color: #facc15; }
+    .pink { background-color: #ec4899; }
+    .orange { background-color: #fb923c; }
+
+    .label {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .count {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .add {
+      background-color: #007aff;
+      color: var(--btn-text);
+    }
+
+    .remove {
+      background-color: var(--secondary);
+      color: var(--text);
+    }
+
+    .reset {
+      background-color: var(--reset);
+      color: var(--btn-text);
+    }
+
+    button:hover {
+      filter: brightness(0.95);
+    }
+
+    .log-container {
+      margin-top: 3rem;
+      width: 100%;
+      max-width: 800px;
+      background-color: var(--card-bg);
+      padding: 1rem 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+    }
+
+    .log-title {
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .log-list {
+      list-style: none;
+      padding-left: 0;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .log-item {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--log-bg);
+    }
+
+    .log-item span {
+      font-weight: bold;
+      display: inline-block;
+      min-width: 80px;
+    }
+
+    .log-plus { color: #16a34a; }
+    .log-minus { color: #dc2626; }
+    .log-reset { color: #f97316; }
+
+    .color-pill {
+    display: inline-block;
+    width: 8px;
+    height: 20px;
+    border-radius: 4px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+
+    .pill-Gelb { background-color: #facc15; }
+    .pill-Pink { background-color: #ec4899; }
+    .pill-Orange { background-color: #fb923c; }
+  </style>
+</head>
+<body>
+  <button class="dark-toggle" onclick="toggleTheme()">🌙 / ☀️</button>
+  <h1>Dosen Zähler</h1>
+  <div class="container">
+    <div class="card" id="Gelb">
+      <div class="color-circle yellow"></div>
+      <div class="label">Limo (Gelb)</div>
+      <div class="count" id="count-Gelb">0</div>
+      <div class="buttons">
+        <button class="add" onclick="update('Gelb', 12)">+12</button>
+        <button class="add" onclick="update('Gelb', 1)">+1</button>
+        <button class="remove" onclick="update('Gelb', -1)">-1</button>
+        <button class="remove" onclick="update('Gelb', -12)">-12</button>
+        <button class="reset" onclick="reset('Gelb')">Reset</button>
+      </div>
+    </div>
+    <div class="card" id="Pink">
+      <div class="color-circle pink"></div>
+      <div class="label">Berry (Pink)</div>
+      <div class="count" id="count-Pink">0</div>
+      <div class="buttons">
+        <button class="add" onclick="update('Pink', 12)">+12</button>
+        <button class="add" onclick="update('Pink', 1)">+1</button>
+        <button class="remove" onclick="update('Pink', -1)">-1</button>
+        <button class="remove" onclick="update('Pink', -12)">-12</button>
+        <button class="reset" onclick="reset('Pink')">Reset</button>
+      </div>
+    </div>
+    <div class="card" id="Orange">
+      <div class="color-circle orange"></div>
+      <div class="label">Sprizz (Orange)</div>
+      <div class="count" id="count-Orange">0</div>
+      <div class="buttons">
+        <button class="add" onclick="update('Orange', 12)">+12</button>
+        <button class="add" onclick="update('Orange', 1)">+1</button>
+        <button class="remove" onclick="update('Orange', -1)">-1</button>
+        <button class="remove" onclick="update('Orange', -12)">-12</button>
+        <button class="reset" onclick="reset('Orange')">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="log-container">
+    <div class="log-title">Letzte Aktionen</div>
+    <ul class="log-list" id="log-list"></ul>
+  </div>
+
+  <script>
+    const counts = {
+      Gelb: 0,
+      Pink: 0,
+      Orange: 0,
+    };
+
+    function update(color, value) {
+      const old = counts[color];
+      counts[color] = Math.max(0, counts[color] + value);
+      document.getElementById('count-' + color).textContent = counts[color];
+      logAction(color, value > 0 ? '+' : '', value);
+    }
+
+    function reset(color) {
+      counts[color] = 0;
+      document.getElementById('count-' + color).textContent = 0;
+      logAction(color, 'reset', 0);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
+
+    (function () {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+
+    function logAction(color, type, value) {
+      const logList = document.getElementById('log-list');
+      const li = document.createElement('li');
+      li.className = 'log-item';
+
+      const pill = `<span class="color-pill pill-${color}"></span>`;
+
+      if (type === 'reset') {
+        li.innerHTML = `${pill}<span class="log-reset">${color}</span> → Reset auf 0`;
+      } else {
+        const cssClass = type.startsWith('+') ? 'log-plus' : 'log-minus';
+        li.innerHTML = `${pill}<span class="${cssClass}">${color}</span> → ${type}${Math.abs(value)} Dose(n)`;
+      }
+
+      logList.insertBefore(li, logList.firstChild);
+      if (logList.children.length > 10) {
+        logList.removeChild(logList.lastChild);
+      }
+    }
+  </script>
+</body>
+</html>
