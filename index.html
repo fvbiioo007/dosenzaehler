@@ -33,18 +33,19 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem;
+      padding: 1rem;
       transition: background 0.3s, color 0.3s;
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: 600;
-      margin-bottom: 2rem;
+      margin: 1rem 0;
+      text-align: center;
     }
 
     .dark-toggle {
-      position: absolute;
+      position: fixed;
       top: 1rem;
       right: 1rem;
       background-color: #007aff;
@@ -53,30 +54,31 @@
       border-radius: 0.5rem;
       padding: 0.5rem 1rem;
       cursor: pointer;
+      z-index: 1000;
     }
 
     .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
       width: 100%;
-      max-width: 1000px;
+      max-width: 500px;
     }
 
     .card {
       background-color: var(--card-bg);
       border-radius: 1.5rem;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-      padding: 2rem;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+      padding: 1.5rem;
       text-align: center;
       transition: background 0.3s;
     }
 
     .color-circle {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
-      margin: 0 auto 1rem;
+      margin: 0 auto 0.5rem;
     }
 
     .yellow { background-color: #facc15; }
@@ -85,11 +87,11 @@
 
     .label {
       font-size: 1.25rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
     }
 
     .count {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       font-weight: bold;
       margin-bottom: 1rem;
     }
@@ -102,12 +104,14 @@
     }
 
     button {
-      padding: 0.5rem 1rem;
+      padding: 0.8rem 1rem;
       font-size: 1rem;
-      border-radius: 0.5rem;
+      border-radius: 0.75rem;
       border: none;
       cursor: pointer;
       transition: background 0.2s ease, color 0.2s ease;
+      flex: 1 1 40%;
+      min-width: 90px;
     }
 
     .add {
@@ -130,37 +134,39 @@
     }
 
     .log-container {
-      margin-top: 3rem;
+      margin-top: 2rem;
       width: 100%;
-      max-width: 800px;
+      max-width: 500px;
       background-color: var(--card-bg);
-      padding: 1rem 1.5rem;
+      padding: 1rem 1.2rem;
       border-radius: 1rem;
       box-shadow: 0 5px 10px rgba(0,0,0,0.05);
     }
 
     .log-title {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 500;
       margin-bottom: 0.75rem;
+      text-align: center;
     }
 
     .log-list {
       list-style: none;
       padding-left: 0;
-      max-height: 200px;
+      max-height: 180px;
       overflow-y: auto;
+      font-size: 0.95rem;
     }
 
     .log-item {
-      padding: 0.5rem 0;
+      padding: 0.4rem 0;
       border-bottom: 1px solid var(--log-bg);
+      display: flex;
+      align-items: center;
     }
 
     .log-item span {
       font-weight: bold;
-      display: inline-block;
-      min-width: 80px;
     }
 
     .log-plus { color: #16a34a; }
@@ -168,18 +174,23 @@
     .log-reset { color: #f97316; }
 
     .color-pill {
-    display: inline-block;
-    width: 8px;
-    height: 20px;
-    border-radius: 4px;
-    margin-right: 0.5rem;
-    vertical-align: middle;
-}
-
+      display: inline-block;
+      width: 6px;
+      height: 18px;
+      border-radius: 3px;
+      margin-right: 0.6rem;
+      vertical-align: middle;
+    }
 
     .pill-Gelb { background-color: #facc15; }
     .pill-Pink { background-color: #ec4899; }
     .pill-Orange { background-color: #fb923c; }
+
+    @media (min-width: 600px) {
+      h1 { font-size: 2.5rem; }
+      .container { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 2rem; }
+      .card { width: 300px; }
+    }
   </style>
 </head>
 <body>
@@ -230,11 +241,7 @@
   </div>
 
   <script>
-    const counts = {
-      Gelb: 0,
-      Pink: 0,
-      Orange: 0,
-    };
+    const counts = { Gelb: 0, Pink: 0, Orange: 0 };
 
     function update(color, value) {
       const old = counts[color];
@@ -276,7 +283,7 @@
       }
 
       logList.insertBefore(li, logList.firstChild);
-      if (logList.children.length > 10) {
+      if (logList.children.length > 20) {
         logList.removeChild(logList.lastChild);
       }
     }
