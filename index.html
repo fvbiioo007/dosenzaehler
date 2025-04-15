@@ -2,7 +2,7 @@
 <html lang="de" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Dosen Zähler</title>
   <style>
     :root {
@@ -112,6 +112,8 @@
       transition: background 0.2s ease, color 0.2s ease;
       flex: 1 1 40%;
       min-width: 90px;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .add {
